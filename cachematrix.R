@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Makes a list with functions
 
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix <- function(pMatrix = matrix()) {
+  pInverse <- NULL;
+  set <- function(y) {
+    pMatrix <<- y;
+    pInverse <<- NULL;
+  }
+  get <- function() {
+    pMatrix;
+  }
+  setmatrix <- function(pSolve) {
+    pInverse <<- pSolve;
+  }
+  getmatrix <- function() {
+    pInverse;
+  }
+  list(set=set, get=get, setmatrix=setmatrix, getmatrix=getmatrix);
 }
 
 
-## Write a short comment describing this function
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+## solve matrix and store its inverse
+
+cacheSolve <- function(pCacheMatrix) {
+  cachedSolve <- pCacheMatrix$getmatrix();
+  if(!is.null(cachedSolve)) {
+    message("Getting cached data!");
+    return(cachedSolve);
+  }
+  cachedSolve <- solve(pCacheMatrix$get());
+  pCacheMatrix$setmatrix(cachedSolve);
+  cachedSolve;
 }
